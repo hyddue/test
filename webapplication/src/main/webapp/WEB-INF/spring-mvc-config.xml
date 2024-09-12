@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+<!-- java에서 리소스맵핑, viewResolver, 어노테이션을 사용할 때 @스캔해서 bean생성 , 연결시켜주는 driven-->
+<!-- autowired를 사용하기 위함 -->
+<mvc:annotation-driven/>
+<!-- 어노테이션으로 설정된 bean을 파일을 생성 -->
+<context:component-scan base-package="controller"/>
+<!-- js css등의 파일을 webapp을 기준으로 처리하는 경로 -->
+<mvc:resources location="/static/" mapping="/static/**"/>
+<!-- controller view처리에 대해 앞부분과 뒷부분에 주소 결합하기 위함 -->
+<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+<beans:property name="prefix" value="/WEB-INF/views/"/>
+<beans:property name="suffix" value=".jsp"/>
+</beans:bean>
+
+<!-- 
+설정파일이 많을 경우 web.xml에 등록하는 파일의 양이 많아진다.
+많은 설정파일을 하나의 파일에 포함시켜 처리하는 방식으로 import 처리 
+-->
+<!-- db datasource -->
+<beans:import resource="spring-database.xml"/>
+
+<!-- 일반 객체는 여기서 빈생성 -->
+<beans:bean id="custaccessden" 
+class="controller.CustomerDeniedHandler"/>
+
+</beans:beans>
+
+
+
+
+
+
+
